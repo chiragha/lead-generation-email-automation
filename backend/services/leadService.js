@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import keywordWebsites from "../config/websites.js";
 
 const extractEmails = (text) => {
   const emailRegex =
@@ -27,45 +28,39 @@ const scrapeWebsite = async (url) => {
   }
 };
 
-const keywordWebsites = {
-  "singing bowl": [
-    "https://www.soundtherapyshop.com",
-    "https://www.tibetanbowls.com",
-    "https://shantibowl.com",
-  ],
-
-  meditation: [
-    "https://www.soundtherapyshop.com",
-    "https://www.mindfulsouls.com",
-  ],
-
-  wellness: [
-    "https://www.soundtherapyshop.com",
-  ],
-};
-
 const searchLeads = async (keyword) => {
   let websites = [];
 
-  const lowerKeyword = keyword.toLowerCase();
+  const lowerKeyword =
+    keyword.toLowerCase();
 
-  if (lowerKeyword.includes("singing")) {
-    websites = keywordWebsites["singing bowl"];
-  } else if (
-    lowerKeyword.includes("meditation")
+  if (
+    lowerKeyword.includes("singing")
   ) {
-    websites = keywordWebsites["meditation"];
+    websites =
+      keywordWebsites.singingBowl;
+  } else if (
+    lowerKeyword.includes(
+      "meditation"
+    )
+  ) {
+    websites =
+      keywordWebsites.meditation;
   } else {
-    websites = keywordWebsites["wellness"];
+    websites =
+      keywordWebsites.wellness;
   }
 
-  const scrapedResults = await Promise.all(
-    websites.map((site) =>
-      scrapeWebsite(site)
-    )
-  );
+  const scrapedResults =
+    await Promise.all(
+      websites.map((site) =>
+        scrapeWebsite(site)
+      )
+    );
 
-  return scrapedResults.filter(Boolean);
+  return scrapedResults.filter(
+    Boolean
+  );
 };
 
 export default searchLeads;

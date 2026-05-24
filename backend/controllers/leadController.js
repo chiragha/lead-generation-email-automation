@@ -1,9 +1,6 @@
 import searchLeads from "../services/leadService.js";
 
-export const searchLeadController = async (
-  req,
-  res
-) => {
+export const searchLeadController = async (req, res) => {
   try {
     const { keyword } = req.query;
 
@@ -21,9 +18,11 @@ export const searchLeadController = async (
       leads,
     });
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Something went wrong",
     });
   }
 };

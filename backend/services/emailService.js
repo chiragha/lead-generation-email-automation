@@ -1,11 +1,6 @@
 import nodemailer from "nodemailer";
 
-const sendEmail = async ({
-  emails,
-  subject,
-  text,
-  attachmentPath,
-}) => {
+const sendEmail = async ({ emails, subject, text, attachmentPath }) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -15,26 +10,23 @@ const sendEmail = async ({
       },
     });
 
-    const sendPromises = emails.map(
-      async (email) => {
-        return transporter.sendMail({
-          from: process.env.EMAIL_USER,
-          to: email,
-          subject,
-          text,
+    const sendPromises = emails.map(async (email) => {
+      return transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject,
+        text,
 
-          attachments: [
-            {
-              filename: "presentation.pdf",
-              path: attachmentPath,
-            },
-          ],
-        });
-      }
-    );
+        attachments: [
+          {
+            filename: "presentation.pdf",
+            path: attachmentPath,
+          },
+        ],
+      });
+    });
 
-    const results =
-      await Promise.all(sendPromises);
+    const results = await Promise.all(sendPromises);
 
     return {
       success: true,

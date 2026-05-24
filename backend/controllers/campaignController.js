@@ -1,55 +1,49 @@
 import searchLeads from "../services/leadService.js";
 import sendEmail from "../services/emailService.js";
 
-export const startCampaignController =
-  async (req, res) => {
-    try {
-      const {
-        keyword,
-        subject,
-        text,
-      } = req.body;
+export const startCampaignController = async (req, res) => {
+  try {
+    const { keyword, subject, text } = req.body;
 
-      if (!keyword) {
+    if (!keyword) {
+      if (!subject || !text) {
         return res.status(400).json({
           success: false,
-          message:
-            "Keyword is required",
+          message: "Subject and text required",
         });
       }
-
-      const leads =
-        await searchLeads(keyword);
-
-      const emails = leads.flatMap(
-        (lead) => lead.emails
-      );
-
-      const uniqueEmails = [
-        ...new Set(emails),
-      ];
-
-      const emailResult =
-        await sendEmail({
-          emails: uniqueEmails,
-          subject,
-          text,
-          attachmentPath:
-            "./uploads/presentation.pdf",
-        });
-
-      res.status(200).json({
-        success: true,
-        keyword,
-        totalLeads:
-          uniqueEmails.length,
-        emails: uniqueEmails,
-        emailResult,
-      });
-    } catch (error) {
-      res.status(500).json({
+      return res.status(400).json({
         success: false,
-        message: error.message,
+        message: "Keyword is required",
       });
     }
-  };
+
+    const leads = await searchLeads(keyword);
+
+    const emails = leads.flatMap((lead) => lead.emails);
+
+    const uniqueEmails = [...new Set(emails)];
+
+    const emailResult = await sendEmail({
+      emails: uniqueEmails,
+      subject,
+      text,
+      attachmentPath: "./uploads/presentation.pdf",
+    });
+
+    res.status(200).json({
+      success: true,
+      keyword,
+      totalLeads: uniqueEmails.length,
+      emails: uniqueEmails,
+      emailResult,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
