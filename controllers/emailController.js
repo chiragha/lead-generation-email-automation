@@ -1,19 +1,39 @@
 import sendEmail from "../services/emailService.js";
 
-export const sendMailController = async (req, res) => {
+export const sendMailController = async (
+  req,
+  res
+) => {
   try {
-    const { to, subject, text } = req.body;
-
-    const result = await sendEmail({
-      to,
+    const {
+      emails,
       subject,
       text,
-      attachmentPath: "./uploads/presentation.pdf",
+    } = req.body;
+
+    if (
+      !emails ||
+      emails.length === 0
+    ) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Emails are required",
+      });
+    }
+
+    const result = await sendEmail({
+      emails,
+      subject,
+      text,
+      attachmentPath:
+        "./uploads/presentation.pdf",
     });
 
     res.status(200).json({
       success: true,
-      message: "Email sent successfully",
+      message:
+        "Bulk email sent successfully",
       data: result,
     });
   } catch (error) {

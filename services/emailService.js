@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 const sendEmail = async ({
-  to,
+  emails,
   subject,
   text,
   attachmentPath,
@@ -15,23 +15,30 @@ const sendEmail = async ({
       },
     });
 
-    const info = await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to,
-      subject,
-      text,
+    const sendPromises = emails.map(
+      async (email) => {
+        return transporter.sendMail({
+          from: process.env.EMAIL_USER,
+          to: email,
+          subject,
+          text,
 
-      attachments: [
-        {
-          filename: "presentation.pdf",
-          path: attachmentPath,
-        },
-      ],
-    });
+          attachments: [
+            {
+              filename: "presentation.pdf",
+              path: attachmentPath,
+            },
+          ],
+        });
+      }
+    );
+
+    const results =
+      await Promise.all(sendPromises);
 
     return {
       success: true,
-      messageId: info.messageId,
+      totalSent: results.length,
     };
   } catch (error) {
     throw new Error(error.message);
