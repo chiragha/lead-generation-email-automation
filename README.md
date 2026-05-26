@@ -206,4 +206,4 @@ npm run dev
 
 Software Developer | MERN Stack Developer
 
-GitHub: YOUR_GITHUB_PROFILE_LINK
+GitHub: [https://github.com/chiragha]
