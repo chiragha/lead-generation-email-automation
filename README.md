@@ -127,7 +127,7 @@ project-root/
 ### 1. Clone the Repository
 
 ```bash
-git clone (https://github.com/chiragha/lead-generation-email-automation/tree/main)
+git clone https://github.com/chiragha/lead-generation-email-automation/tree/main
 ```
 
 ### 2. Navigate to Project
@@ -197,15 +197,6 @@ npm run dev
 - Error handling for unavailable pages
 - Structuring reusable scraping logic
 
-
-
-## Demo
-
-### Screenshots
-<img width="1365" height="622" alt="success" src="https://github.com/user-attachments/assets/d85ac690-124d-4de6-b116-1c68d4b17cea" />
-<img width="1366" height="775" alt="send_email" src="https://github.com/user-attachments/assets/0d3b6674-eafb-4145-bc34-4290587d85c0" />
-
-<img width="1361" height="703" alt="campaign_start" src="https://github.com/user-attachments/assets/ecc99814-8822-450f-86b9-d7efd17440ef" />
 
 ---
 
