@@ -127,13 +127,13 @@ project-root/
 ### 1. Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_LINK
+git clone (https://github.com/chiragha/lead-generation-email-automation/tree/main)
 ```
 
 ### 2. Navigate to Project
 
 ```bash
-cd project-name
+cd singing-bowl-automation
 ```
 
 ### 3. Install Dependencies
